@@ -33,7 +33,7 @@ namespace z21_exporte
 
         public static Z21.Client Client { get; } = new Z21.Client();
 
-        public static void Main(string[] args) => Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
+        public static async Task Main(string[] args) => await Parser.Default.ParseArguments<Options>(args).WithParsedAsync(async o =>
         {
             try
             {
@@ -50,7 +50,9 @@ namespace z21_exporte
                 metricServer.Start();
                 Log($"Server started on port {o.Port}.");
 
-                Console.ReadLine();
+                await Task.Delay(Timeout.Infinite);
+
+                Log($"Ending .. key was pressed.");
             }
             catch (Exception ex)
             {
