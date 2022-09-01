@@ -5,6 +5,7 @@ using System.Net;
 using Z21.DTO;
 using Microsoft.Extensions.Logging;
 using Z21;
+using System.Runtime.InteropServices;
 
 namespace z21_exporte
 {
@@ -41,6 +42,12 @@ namespace z21_exporte
                 Client.OnSystemStateDataChanged += (a, b) => SetValues(b.Data);
                 Client.ClientReachabilityChanged += Client_ClientReachabilityChanged;
                 Client.LogMessage += (a, b) => Log($"Z21 client: {b.Message}");
+
+                while (!(await Client.PingAsync()))
+                {
+                    Log($"Failing to connect to target.");
+                    await Task.Delay(new TimeSpan(0, 0, 1));
+                }
                 Log("Z21 initialized.");
 
                 Timer.Interval = new TimeSpan(0, 0, o.Rate).TotalMilliseconds;
@@ -85,6 +92,6 @@ namespace z21_exporte
             VCCVoltage.Set((double)(e.VCCVoltage / 1000.0m));
         }
 
-        private static void Log(string txt) => Console.WriteLine(txt);
+        private static void Log(string txt) => Console.WriteLine($"{DateTime.Now:dd.MM.yyyy HH:mm:ss} {txt}");
     }
 }
