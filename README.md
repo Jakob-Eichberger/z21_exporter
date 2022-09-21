@@ -3,7 +3,7 @@ Prometheus exporter for the digital command center z21/Z21 from Roco/Fleischmann
 
 # Install
 
-Get the linux arm image from [dockerhub](https://hub.docker.com/repository/docker/jakobeichberger/z21exporter).
+Get the linux arm image from [dockerhub](https://hub.docker.com/r/jakobeichberger/z21exporter).
 
 
 Use the following command to run the container on an arm based linux machine:
